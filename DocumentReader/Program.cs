@@ -1,4 +1,5 @@
-﻿using ClosedXML.Excel;
+﻿using System.Text.Json;
+using ClosedXML.Excel;
 using DocumentReader;
 using FluentValidation.Results;
 using iText.Kernel.Geom;
@@ -6,17 +7,21 @@ using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Filter;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
-using Microsoft.Extensions.Configuration;
 using Spectre.Console;
 using Path = System.IO.Path;
 using ValidationResult = FluentValidation.Results.ValidationResult;
 
 // Load config from json file
-Config config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("config.json", false, true)
-                    .Build()
-                    .Get<Config>() ??
-                new Config();
+string? configFile = Directory.GetFiles(Directory.GetCurrentDirectory(), "config.json", SearchOption.TopDirectoryOnly)
+    .FirstOrDefault();
+if (configFile == null)
+{
+    AnsiConsole.MarkupLine("[bold red]config.json not found in the current directory[/]");
+    Console.ReadLine();
+    return;
+}
+
+Config config = JsonSerializer.Deserialize(File.ReadAllText(configFile), ConfigContext.Default.Config) ?? new Config();
 
 // Validate config
 var validator = new ConfigValidator();
@@ -29,18 +34,12 @@ if (!validationResult.IsValid)
         AnsiConsole.MarkupLine($"[red]{error.ErrorMessage}[/]");
     }
 
+    Console.ReadLine();
     return;
 }
 
 var values = new List<(string name, string value)>();
-
-string pdfPath = string.Empty;
-#if DEBUG
-pdfPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "China");
-#else
-pdfPath = ".";
-#endif
-string[] files = Directory.GetFiles(pdfPath, "*.pdf", SearchOption.TopDirectoryOnly);
+string[] files = Directory.GetFiles(".", "*.pdf", SearchOption.TopDirectoryOnly);
 
 AnsiConsole.Status()
     .Start(
