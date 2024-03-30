@@ -1,0 +1,61 @@
+﻿{
+  "Areas": [
+    {
+      "Name": "TotalPrepaid",
+      "X": 0.5,
+      "Y": 9.8,
+      "Width": 1.5,
+      "Height": 0.4
+    },
+    {
+      "Name": "Packages",
+      "X": 0.5,
+      "Y": 5.3,
+      "Width": 0.39,
+      "Height": 0.4
+    },
+    {
+      "Name": "Mawb",
+      "X": 5.78,
+      "Y": 5.91,
+      "Width": 2.2,
+      "Height": 0.2
+    },
+    {
+      "Name": "Hawb",
+      "X": 5.0,
+      "Y": 0.1,
+      "Width": 3.0,
+      "Height": 0.3
+    },
+    {
+      "Name": "GrossWeight",
+      "X": 1.0,
+      "Y": 5.3,
+      "Width": 0.39,
+      "Height": 0.4
+    },
+    {
+      "Name": "FlightDate",
+      "X": -2.35,
+      "Y": 4.1,
+      "Width": 1.82,
+      "Height": 0.33
+    },
+    {
+      "Name": "FcaCharges",
+      "X": 0.5,
+      "Y": 8.8,
+      "Width": 1.5,
+      "Height": 0.4
+    },
+    {
+      "Name": "Eta",
+      "X": 5.77,
+      "Y": 6.22,
+      "Width": 2.2,
+      "Height": 0.2
+    }
+  ]
+}
+
